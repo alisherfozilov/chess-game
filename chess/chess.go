@@ -1,11 +1,13 @@
 package chess
 
-import "fmt"
+import (
+	"fmt"
 
-import gb "temp/chess/glob"
-import "temp/chess/glob/stackXy"
-import position "temp/chess/glob/pos"
-import globXy "temp/chess/glob/Xy"
+	gb "temp/chess/glob"
+	globXy "temp/chess/glob/Xy"
+	position "temp/chess/glob/pos"
+	"temp/chess/glob/stackXy"
+)
 
 // renaming imported types
 type stack = stackXy.Stack
@@ -76,8 +78,8 @@ func GetFiguresMoves(move Xy, steak *stack) { //fill your stack with all possibl
 	var pos Xy
 	var flag bool = true
 
-	pos.X = move.X;
-	pos.Y = move.Y;
+	pos.X = move.X
+	pos.Y = move.Y
 
 	var fig int = gb.Table[pos.Y][pos.X]
 	var temp int
@@ -92,8 +94,8 @@ func GetFiguresMoves(move Xy, steak *stack) { //fill your stack with all possibl
 			steak.Push(posT)
 		}
 
-		posT = pos;
-		posT.Y += 1;
+		posT = pos
+		posT.Y += 1
 		if posT.Y < 8 && gb.Table[posT.Y][pos.X] == 0 {
 			steak.Push(posT)
 		}
@@ -143,7 +145,7 @@ func GetFiguresMoves(move Xy, steak *stack) { //fill your stack with all possibl
 		posT.Y -= 1
 
 		if (posT.Y >= 0) && (gb.Table[posT.Y][pos.X] == 0) {
-			steak.Push(posT);
+			steak.Push(posT)
 		}
 
 		if (pos.Y-1) >= 0 && (pos.X-1) >= 0 && gb.Table[pos.Y-1][pos.X-1] != 0 {
@@ -190,387 +192,388 @@ func GetFiguresMoves(move Xy, steak *stack) { //fill your stack with all possibl
 		posT.X += 2
 		posT.Y--
 
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.X += 2;
-		posT.Y++;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.X++;
-		posT.Y += 2;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.X--;
-		posT.Y += 2;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.X -= 2;
-		posT.Y++;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.X -= 2;
-		posT.Y--;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.X--;
-		posT.Y -= 2;
-		horseB(posT, temp, flag, steak);
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.X += 2
+		posT.Y++
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.X++
+		posT.Y += 2
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.X--
+		posT.Y += 2
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.X -= 2
+		posT.Y++
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.X -= 2
+		posT.Y--
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.X--
+		posT.Y -= 2
+		horseB(posT, temp, flag, steak)
 	case 21:
-		posT = pos;
-		posT.X++;
-		posT.Y -= 2;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X += 2;
-		posT.Y--;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X += 2;
-		posT.Y++;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X++;
-		posT.Y += 2;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X--;
-		posT.Y += 2;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X -= 2;
-		posT.Y++;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X -= 2;
-		posT.Y--;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X--;
-		posT.Y -= 2;
+		posT = pos
+		posT.X++
+		posT.Y -= 2
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X += 2
+		posT.Y--
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X += 2
+		posT.Y++
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X++
+		posT.Y += 2
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X--
+		posT.Y += 2
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X -= 2
+		posT.Y++
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X -= 2
+		posT.Y--
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X--
+		posT.Y -= 2
 		horse(posT, temp, flag, steak)
 	case 3: // WARNING! '{' WAS AFTER "CASE 3"
 		br := true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X++;
-			posT.Y++;
-			br = elefB(posT, temp, flag, steak);
+			posT.X++
+			posT.Y++
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X++;
-			posT.Y--;
-			br = elefB(posT, temp, flag, steak);
+			posT.X++
+			posT.Y--
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X--;
-			posT.Y++;
-			br = elefB(posT, temp, flag, steak);
+			posT.X--
+			posT.Y++
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X--;
-			posT.Y--;
-			br = elefB(posT, temp, flag, steak);
+			posT.X--
+			posT.Y--
+			br = elefB(posT, temp, flag, steak)
 		}
 	case 31:
 		br := true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X++;
-			posT.Y++;
-			br = elef(posT, temp, flag, steak);
+			posT.X++
+			posT.Y++
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X++;
-			posT.Y--;
-			br = elef(posT, temp, flag, steak);
+			posT.X++
+			posT.Y--
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X--;
-			posT.Y++;
-			br = elef(posT, temp, flag, steak);
+			posT.X--
+			posT.Y++
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X--;
-			posT.Y--;
-			br = elef(posT, temp, flag, steak);
+			posT.X--
+			posT.Y--
+			br = elef(posT, temp, flag, steak)
 		}
 	case 5:
 		br := true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << "ER1\n";
-			posT.X++;
-			br = elefB(posT, temp, flag, steak);
+			posT.X++
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << posT.Y << " YYY\n";
-			posT.Y++;
-			br = elefB(posT, temp, flag, steak);
+			posT.Y++
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << "ER3\n";
-			posT.X--;
-			br = elefB(posT, temp, flag, steak);
+			posT.X--
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << "ER4\n";
-			posT.Y--;
-			br = elefB(posT, temp, flag, steak);
+			posT.Y--
+			br = elefB(posT, temp, flag, steak)
 		}
 	case 51:
 		br := true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << "ER1\n";
-			posT.X++;
-			br = elef(posT, temp, flag, steak);
+			posT.X++
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << posT.Y << " YYY\n";
-			posT.Y++;
-			br = elef(posT, temp, flag, steak);
+			posT.Y++
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << "ER3\n";
-			posT.X--;
-			br = elef(posT, temp, flag, steak);
+			posT.X--
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << "ER4\n";
-			posT.Y--;
-			br = elef(posT, temp, flag, steak);
+			posT.Y--
+			br = elef(posT, temp, flag, steak)
 		}
 	case 10:
 		br := true
-		posT = pos;
+		posT = pos
 		////cout << "%!\n";
 		for br {
 			////cout << "ER1\n";
-			posT.X++;
-			br = elefB(posT, temp, flag, steak);
+			posT.X++
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << posT.Y << " YYY\n";
-			posT.Y++;
-			br = elefB(posT, temp, flag, steak);
+			posT.Y++
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << "ER3\n";
-			posT.X--;
-			br = elefB(posT, temp, flag, steak);
+			posT.X--
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << "ER4\n";
-			posT.Y--;
-			br = elefB(posT, temp, flag, steak);
+			posT.Y--
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X++;
-			posT.Y++;
-			br = elefB(posT, temp, flag, steak);
+			posT.X++
+			posT.Y++
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X++;
-			posT.Y--;
-			br = elefB(posT, temp, flag, steak);
+			posT.X++
+			posT.Y--
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X--;
-			posT.Y++;
-			br = elefB(posT, temp, flag, steak);
+			posT.X--
+			posT.Y++
+			br = elefB(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X--;
-			posT.Y--;
-			br = elefB(posT, temp, flag, steak);
+			posT.X--
+			posT.Y--
+			br = elefB(posT, temp, flag, steak)
 		}
 	case 101:
 		br := true
-		posT = pos;
+		posT = pos
 		////cout << "%!\n";
 		for br {
 			////cout << "ER1\n";
-			posT.X++;
-			br = elef(posT, temp, flag, steak);
+			posT.X++
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << posT.Y << " YYY\n";
-			posT.Y++;
-			br = elef(posT, temp, flag, steak);
+			posT.Y++
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << "ER3\n";
-			posT.X--;
-			br = elef(posT, temp, flag, steak);
+			posT.X--
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
 			////cout << "ER4\n";
-			posT.Y--;
-			br = elef(posT, temp, flag, steak);
+			posT.Y--
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X++;
-			posT.Y++;
-			br = elef(posT, temp, flag, steak);
+			posT.X++
+			posT.Y++
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X++;
-			posT.Y--;
-			br = elef(posT, temp, flag, steak);
+			posT.X++
+			posT.Y--
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X--;
-			posT.Y++;
-			br = elef(posT, temp, flag, steak);
+			posT.X--
+			posT.Y++
+			br = elef(posT, temp, flag, steak)
 		}
 
 		br = true
-		posT = pos;
+		posT = pos
 		for br {
-			posT.X--;
-			posT.Y--;
-			br = elef(posT, temp, flag, steak);
+			posT.X--
+			posT.Y--
+			br = elef(posT, temp, flag, steak)
 		}
 	case 99:
-		posT = pos;
-		posT.X++;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.X--;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.Y++;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.Y--;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.X++;
-		posT.Y++;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.X++;
-		posT.Y--;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.X--;
-		posT.Y++;
-		horseB(posT, temp, flag, steak);
-		posT = pos;
-		posT.X--;
-		posT.Y--;
-		horseB(posT, temp, flag, steak);
+		posT = pos
+		posT.X++
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.X--
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.Y++
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.Y--
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.X++
+		posT.Y++
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.X++
+		posT.Y--
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.X--
+		posT.Y++
+		horseB(posT, temp, flag, steak)
+		posT = pos
+		posT.X--
+		posT.Y--
+		horseB(posT, temp, flag, steak)
 	case 990:
 		//cout << "KING: "; //cout << pos.X << ' ' << pos.Y << endl;
-		posT = pos;
-		posT.X++;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X--;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.Y++;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.Y--;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X++;
-		posT.Y++;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X++;
-		posT.Y--;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X--;
-		posT.Y++;
-		horse(posT, temp, flag, steak);
-		posT = pos;
-		posT.X--;
-		posT.Y--;
-		horse(posT, temp, flag, steak);
+		posT = pos
+		posT.X++
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X--
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.Y++
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.Y--
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X++
+		posT.Y++
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X++
+		posT.Y--
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X--
+		posT.Y++
+		horse(posT, temp, flag, steak)
+		posT = pos
+		posT.X--
+		posT.Y--
+		horse(posT, temp, flag, steak)
 	default:
 		fmt.Println("FUCKING PROGER!")
 		fmt.Printf("%v %v x y\n", move.X, move.Y)
 		fmt.Printf("%v FIG\n", gb.Table[move.Y][move.X])
 	} // switch end
 }
+
 //TODO ракировка!
 /*func rakirovkaWhite(moves *stack) {
 	if didWhiteKingMove {
@@ -657,33 +660,33 @@ func PrintTable() {
 		for j := 0; j < gb.SIZE; j++ {
 			switch gb.Table[i][j] {
 			case 1:
-				figure = 'p';
+				figure = 'p'
 			case 2:
-				figure = 'k';
+				figure = 'k'
 			case 3:
-				figure = 's';
+				figure = 's'
 			case 5:
-				figure = 'l';
+				figure = 'l'
 			case 10:
-				figure = 'f';
+				figure = 'f'
 			case 99:
-				figure = 'i';
+				figure = 'i'
 			case 11:
-				figure = 'P';
+				figure = 'P'
 			case 21:
-				figure = 'K';
+				figure = 'K'
 			case 31:
-				figure = 'S';
+				figure = 'S'
 			case 51:
-				figure = 'L';
+				figure = 'L'
 			case 101:
-				figure = 'F';
+				figure = 'F'
 			case 990:
-				figure = 'I';
+				figure = 'I'
 			case 7:
-				figure = '*';
+				figure = '*'
 			default:
-				figure = '.';
+				figure = '.'
 			}
 			fmt.Printf("  %v", string(figure))
 		}
@@ -695,6 +698,13 @@ func PrintTable() {
 
 func MakeMove(move string) bool {
 	if move == "ZZZ" {
+		return false
+	}
+	if move == "Adiba" || move == "Адиба" {
+		fmt.Println("Come along with me with a 🦋 and 🐝")
+		fmt.Println("1.Продолжить")
+		fmt.Scan(&move)
+		gb.Magic = true
 		return false
 	}
 	if move == "AlisherFozilov" || move == "АлишерФозилов" || move == "АкаиАсал" || move == "Асал" {
@@ -800,7 +810,7 @@ func MakeMove(move string) bool {
 		fmt.Scan(&move)
 		return false
 	}
-	if move == "Ёсумин" || move == "Yosumin" || move == "Есумин" || move == "Ёсуман" || move == "Есуман"{
+	if move == "Ёсумин" || move == "Yosumin" || move == "Есумин" || move == "Ёсуман" || move == "Есуман" {
 		fmt.Println("До сих пор не знаю, как правильно: Ёсумин или Ёсуман.")
 		fmt.Println("Хотя, я же комп, я тебя вообще не знаю.")
 		fmt.Println("1.Продолжить")
@@ -883,21 +893,21 @@ func MakeMove(move string) bool {
 
 	switch move[0] {
 	case 'A':
-		num = 0;
+		num = 0
 	case 'B':
-		num = 1;
+		num = 1
 	case 'C':
-		num = 2;
+		num = 2
 	case 'D':
-		num = 3;
+		num = 3
 	case 'E':
-		num = 4;
+		num = 4
 	case 'F':
-		num = 5;
+		num = 5
 	case 'G':
-		num = 6;
+		num = 6
 	case 'H':
-		num = 7;
+		num = 7
 	default:
 		return true
 	}
@@ -912,40 +922,40 @@ func MakeMove(move string) bool {
 
 	switch pos.Sy {
 	case 0:
-		pos.Sy = 7;
+		pos.Sy = 7
 	case 1:
-		pos.Sy = 6;
+		pos.Sy = 6
 	case 2:
-		pos.Sy = 5;
+		pos.Sy = 5
 	case 3:
-		pos.Sy = 4;
+		pos.Sy = 4
 	case 4:
-		pos.Sy = 3;
+		pos.Sy = 3
 	case 5:
-		pos.Sy = 2;
+		pos.Sy = 2
 	case 6:
-		pos.Sy = 1;
+		pos.Sy = 1
 	case 7:
-		pos.Sy = 0;
+		pos.Sy = 0
 	}
 
 	switch move[2] {
 	case 'A':
-		num = 0;
+		num = 0
 	case 'B':
-		num = 1;
+		num = 1
 	case 'C':
-		num = 2;
+		num = 2
 	case 'D':
-		num = 3;
+		num = 3
 	case 'E':
-		num = 4;
+		num = 4
 	case 'F':
-		num = 5;
+		num = 5
 	case 'G':
-		num = 6;
+		num = 6
 	case 'H':
-		num = 7;
+		num = 7
 	default:
 		return true
 	}
@@ -960,21 +970,21 @@ func MakeMove(move string) bool {
 
 	switch pos.Ey {
 	case 0:
-		pos.Ey = 7;
+		pos.Ey = 7
 	case 1:
-		pos.Ey = 6;
+		pos.Ey = 6
 	case 2:
-		pos.Ey = 5;
+		pos.Ey = 5
 	case 3:
-		pos.Ey = 4;
+		pos.Ey = 4
 	case 4:
-		pos.Ey = 3;
+		pos.Ey = 3
 	case 5:
-		pos.Ey = 2;
+		pos.Ey = 2
 	case 6:
-		pos.Ey = 1;
+		pos.Ey = 1
 	case 7:
-		pos.Ey = 0;
+		pos.Ey = 0
 	}
 
 	/*if isWhite(Table[pos.sy][pos.sx]) { // DONT FORGET AND DONT DELETE
@@ -988,7 +998,7 @@ func MakeMove(move string) bool {
 	for !moves.Empty() {
 		moveTemp, _ = moves.Top()
 		moves.Pop()
-		if moveTemp == userMove{
+		if moveTemp == userMove {
 			flag = true
 		}
 	}
@@ -1031,8 +1041,8 @@ func isChecked(p Xy) float64 {
 		GetFiguresMoves(vec[i], &s)
 	}
 	for !s.Empty() {
-		v, _ = s.Top();
-		s.Pop();
+		v, _ = s.Top()
+		s.Pop()
 		if v.X == p.X && v.Y == p.Y {
 			if col {
 				answer += 0.11
