@@ -108,12 +108,15 @@ func Play() {
 	var temp string
 	_, _ = fmt.Scan(&temp)
 }
+
 type Settings struct {
-	choice int
+	choice     int
 	thinkLevel int
-	sound bool
+	sound      bool
 }
+
 var settings Settings
+
 func (s *Settings) print() {
 	fmt.Printf("\t\tНастройки\n\n")
 	fmt.Println("1.Сложность")
@@ -138,7 +141,7 @@ func (s *Settings) switchChoice() bool {
 	}
 	return true
 }
-func (s *Settings) inputChoice () {
+func (s *Settings) inputChoice() {
 	_, err := fmt.Scan(&s.choice)
 	if err != nil {
 		fmt.Println("ERROR", err)

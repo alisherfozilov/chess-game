@@ -2,6 +2,7 @@ package menu
 
 import (
 	"fmt"
+
 	"temp/chess"
 	_ "temp/chess"
 	"temp/chess/showCode"
@@ -11,11 +12,13 @@ import (
 
 var play = game.Play
 var settingsFunc = game.SettingsFunc
+
 type Menu struct {
 	choice int
+	_      struct{}
 }
 
-func (m *Menu) Print () {
+func (m *Menu) Print() {
 	fmt.Printf("\t\tМеню\n\n")
 	fmt.Println("1.Играть")
 	fmt.Println("2.Настройки")
@@ -24,7 +27,7 @@ func (m *Menu) Print () {
 	fmt.Println("5.Выход")
 	fmt.Println("6.Шутка про шахматы")
 }
-func (m *Menu) InputChoice () {
+func (m *Menu) InputChoice() {
 	_, err := fmt.Scan(&m.choice)
 	if err != nil {
 		fmt.Println("ERROR", err)
@@ -130,12 +133,14 @@ func joke() {
 	var temp string
 	_, _ = fmt.Scan(&temp)
 }
+
 var stringsExit = []string{
 	"Вы точно хотите выйти?",
 	"Вы абсолютно уверены, что хотите выйти?",
 	"Мне кажется вы сомневаетесь. Подумайте хорошенько.",
 	"Я понял, что Вам нужна помощь и решил всё за Вас. Не благодарите.",
 }
+
 func exitChess(i int) bool {
 	cmd.Clear()
 	fmt.Printf("\n\n\n\n\n\n\n\n")

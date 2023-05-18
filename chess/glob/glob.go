@@ -1,6 +1,6 @@
 package glob
 
-var Letters = []byte{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' }
+var Letters = []byte{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}
 var Numbers = []int{8, 7, 6, 5, 4, 3, 2, 1}
 var Black = []int{1, 2, 3, 5, 10, 99}
 var White = []int{11, 21, 31, 51, 101, 990}
