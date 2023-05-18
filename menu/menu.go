@@ -2,6 +2,7 @@ package menu
 
 import (
 	"fmt"
+
 	"temp/chess"
 	_ "temp/chess"
 	"temp/chess/showCode"
@@ -14,6 +15,7 @@ var settingsFunc = game.SettingsFunc
 
 type Menu struct {
 	choice int
+	_      struct{}
 }
 
 func (m *Menu) Print() {
