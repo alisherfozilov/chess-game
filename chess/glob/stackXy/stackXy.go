@@ -43,6 +43,7 @@ type NegativeIndexError struct {
 	functionName string
 	index        int
 }
+
 func (s NegativeIndexError) Error() string {
 	return fmt.Sprintf("%v: negative index [%v]", s.functionName, s.index)
 }
