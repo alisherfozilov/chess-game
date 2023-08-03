@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"log"
 
-	"temp/chess"
-	gb "temp/chess/glob"
-	XyPack "temp/chess/glob/Xy"
-	"temp/chess/glob/stackXy"
+	"github.com/alisherfozilov/chess-game/chess"
+	gb "github.com/alisherfozilov/chess-game/chess/glob"
+	XyPack "github.com/alisherfozilov/chess-game/chess/glob/Xy"
+	"github.com/alisherfozilov/chess-game/chess/glob/stackXy"
 )
 
 type stack = stackXy.Stack

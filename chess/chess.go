@@ -3,10 +3,10 @@ package chess
 import (
 	"fmt"
 
-	gb "temp/chess/glob"
-	globXy "temp/chess/glob/Xy"
-	position "temp/chess/glob/pos"
-	"temp/chess/glob/stackXy"
+	gb "github.com/alisherfozilov/chess-game/chess/glob"
+	globXy "github.com/alisherfozilov/chess-game/chess/glob/Xy"
+	position "github.com/alisherfozilov/chess-game/chess/glob/pos"
+	"github.com/alisherfozilov/chess-game/chess/glob/stackXy"
 )
 
 // renaming imported types

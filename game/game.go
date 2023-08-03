@@ -3,10 +3,10 @@ package game
 import (
 	"fmt"
 
-	"temp/chess"
-	"temp/chess/AI"
-	gb "temp/chess/glob"
-	"temp/cmd"
+	"github.com/alisherfozilov/chess-game/chess"
+	"github.com/alisherfozilov/chess-game/chess/AI"
+	gb "github.com/alisherfozilov/chess-game/chess/glob"
+	"github.com/alisherfozilov/chess-game/cmd"
 )
 
 func init() {

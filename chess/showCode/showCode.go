@@ -2,7 +2,8 @@ package showCode
 
 import (
 	"fmt"
-	"temp/cmd"
+
+	"github.com/alisherfozilov/chess-game/cmd"
 )
 
 func ShowCode() {

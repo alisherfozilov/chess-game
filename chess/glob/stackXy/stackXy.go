@@ -1,7 +1,10 @@
 package stackXy
 
-import "fmt"
-import "temp/chess/glob/Xy"
+import (
+	"fmt"
+
+	"github.com/alisherfozilov/chess-game/chess/glob/Xy"
+)
 
 type Stack struct {
 	Slice []Xy.Xy

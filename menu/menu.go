@@ -3,11 +3,11 @@ package menu
 import (
 	"fmt"
 
-	"temp/chess"
-	_ "temp/chess"
-	"temp/chess/showCode"
-	"temp/cmd"
-	"temp/game"
+	"github.com/alisherfozilov/chess-game/chess"
+	_ "github.com/alisherfozilov/chess-game/chess"
+	"github.com/alisherfozilov/chess-game/chess/showCode"
+	"github.com/alisherfozilov/chess-game/cmd"
+	"github.com/alisherfozilov/chess-game/game"
 )
 
 var play = game.Play
