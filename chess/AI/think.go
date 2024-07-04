@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"log"
 
-	"temp/chess"
-	gb "temp/chess/glob"
-	XyPack "temp/chess/glob/Xy"
-	"temp/chess/glob/stackXy"
+	"github.com/alisherfozilov/chess-game/chess"
+	gb "github.com/alisherfozilov/chess-game/chess/glob"
+	XyPack "github.com/alisherfozilov/chess-game/chess/glob/Xy"
+	"github.com/alisherfozilov/chess-game/chess/glob/stackXy"
 )
 
 type stack = stackXy.Stack
@@ -43,7 +43,7 @@ func helpThink(recStep int, whiteSide bool, bestMove *gb.ComputerMove, tempScore
 
 		for !moves.Empty() { // for every move
 			move, _ := moves.Top() // get move
-			_ = moves.Pop()// delete figure
+			_ = moves.Pop()        // delete figure
 
 			// make move
 			whoYouKilled := gb.Table[move.Y][move.X]
@@ -55,7 +55,7 @@ func helpThink(recStep int, whiteSide bool, bestMove *gb.ComputerMove, tempScore
 
 			if recStep > 0 {
 				isLast = false
-				finalScore = helpThink(recStep - 1, !whiteSide, bestMove, score,false)
+				finalScore = helpThink(recStep-1, !whiteSide, bestMove, score, false)
 			}
 
 			if !isLast {
@@ -100,37 +100,37 @@ func compare(bestScore, score float64, whiteSide bool) bool {
 func rank(fig int) float64 { // thanks to my stupidness this func returns rank only for white side :D
 	switch fig {
 	case 0:
-		return 0;
+		return 0
 
 	case 11:
-		return -1;
+		return -1
 	case 1:
-		return 1;
+		return 1
 
 	case 21:
-		return -2.7;
+		return -2.7
 	case 2:
-		return 2.7;
+		return 2.7
 
 	case 31:
-		return -3;
+		return -3
 	case 3:
-		return 3;
+		return 3
 
 	case 51:
-		return -5;
+		return -5
 	case 5:
-		return 5;
+		return 5
 
 	case 101:
-		return -13;
+		return -13
 	case 10:
-		return 13;
+		return 13
 
 	case 990:
-		return -9990;
+		return -9990
 	case 99:
-		return 1000;
+		return 1000
 
 	default:
 		fmt.Println("RANKer")
@@ -148,37 +148,37 @@ func positionScore(p Xy, whiteColor bool) float64 {
 		_ = st.Pop()
 		switch gb.Table[temp.Y][temp.X] {
 		case 0:
-			answer += 0;
+			answer += 0
 
 		case 11:
-			answer += -0.00001;
+			answer += -0.00001
 		case 1:
-			answer += 0.00001;
+			answer += 0.00001
 
 		case 21:
-			answer += -0.00003;
+			answer += -0.00003
 		case 2:
-			answer += 0.00003;
+			answer += 0.00003
 
 		case 31:
-			answer += -0.00003;
+			answer += -0.00003
 		case 3:
-			answer += 0.00003;
+			answer += 0.00003
 
 		case 51:
-			answer += -0.00005;
+			answer += -0.00005
 		case 5:
-			answer += 0.00005;
+			answer += 0.00005
 
 		case 101:
-			answer += -0.0001;
+			answer += -0.0001
 		case 10:
-			answer += 0.0001;
+			answer += 0.0001
 
 		case 990:
-			answer += -0.001;
+			answer += -0.001
 		case 99:
-			answer += 0.001;
+			answer += 0.001
 
 		default:
 			log.Fatal("rankER_POSIT")
@@ -193,27 +193,31 @@ func positionScore(p Xy, whiteColor bool) float64 {
 
 	return answer
 }
-/*var cofficientWhite = [][]float64 {
-	{0.071, 0.071, 0.071, 0.071, 0.071, 0.071, 0.071, 0.071},
-	{0.061, 0.062, 0.062, 0.062, 0.062, 0.062, 0.062, 0.061},
-	{0.051, 0.052, 0.053, 0.053, 0.053, 0.053, 0.052, 0.051},
-	{0.041, 0.042, 0.043, 0.044, 0.044, 0.043, 0.042, 0.041},
-	{0.031, 0.032, 0.033, 0.033, 0.033, 0.033, 0.032, 0.031},
-	{0.021, 0.022, 0.023, 0.023, 0.023, 0.023, 0.022, 0.021},
-	{0.011, 0.012, 0.012, 0.012, 0.012, 0.012, 0.012, 0.012},
-	{0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001},
-}
-var cofficientBlack = [][]float64 {
-	{0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001},
-	{0.011, 0.012, 0.012, 0.012, 0.012, 0.012, 0.012, 0.011},
-	{0.021, 0.022, 0.023, 0.023, 0.023, 0.023, 0.022, 0.021},
-	{0.031, 0.032, 0.033, 0.033, 0.033, 0.033, 0.032, 0.031},
-	{0.041, 0.042, 0.043, 0.044, 0.044, 0.043, 0.042, 0.041},
-	{0.051, 0.052, 0.053, 0.053, 0.053, 0.053, 0.052, 0.051},
-	{0.061, 0.062, 0.062, 0.062, 0.062, 0.062, 0.062, 0.061},
-	{0.071, 0.071, 0.071, 0.071, 0.071, 0.071, 0.071, 0.071},
-}*/
-var cofficientWhite = [][]float64 {
+
+/*
+	var cofficientWhite = [][]float64 {
+		{0.071, 0.071, 0.071, 0.071, 0.071, 0.071, 0.071, 0.071},
+		{0.061, 0.062, 0.062, 0.062, 0.062, 0.062, 0.062, 0.061},
+		{0.051, 0.052, 0.053, 0.053, 0.053, 0.053, 0.052, 0.051},
+		{0.041, 0.042, 0.043, 0.044, 0.044, 0.043, 0.042, 0.041},
+		{0.031, 0.032, 0.033, 0.033, 0.033, 0.033, 0.032, 0.031},
+		{0.021, 0.022, 0.023, 0.023, 0.023, 0.023, 0.022, 0.021},
+		{0.011, 0.012, 0.012, 0.012, 0.012, 0.012, 0.012, 0.012},
+		{0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001},
+	}
+
+	var cofficientBlack = [][]float64 {
+		{0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001},
+		{0.011, 0.012, 0.012, 0.012, 0.012, 0.012, 0.012, 0.011},
+		{0.021, 0.022, 0.023, 0.023, 0.023, 0.023, 0.022, 0.021},
+		{0.031, 0.032, 0.033, 0.033, 0.033, 0.033, 0.032, 0.031},
+		{0.041, 0.042, 0.043, 0.044, 0.044, 0.043, 0.042, 0.041},
+		{0.051, 0.052, 0.053, 0.053, 0.053, 0.053, 0.052, 0.051},
+		{0.061, 0.062, 0.062, 0.062, 0.062, 0.062, 0.062, 0.061},
+		{0.071, 0.071, 0.071, 0.071, 0.071, 0.071, 0.071, 0.071},
+	}
+*/
+var cofficientWhite = [][]float64{
 	{0.0000071, 0.0000071, 0.0000071, 0.0000071, 0.0000071, 0.0000071, 0.0000071, 0.0000071},
 	{0.0000061, 0.0000062, 0.0000062, 0.0000062, 0.0000062, 0.0000062, 0.0000062, 0.0000061},
 	{0.0000051, 0.0000052, 0.0000053, 0.0000053, 0.0000053, 0.0000053, 0.0000052, 0.0000051},
@@ -223,7 +227,7 @@ var cofficientWhite = [][]float64 {
 	{0.0000011, 0.0000012, 0.0000012, 0.0000012, 0.0000012, 0.0000012, 0.0000012, 0.0000011},
 	{0.0000001, 0.0000001, 0.0000001, 0.0000001, 0.0000001, 0.0000001, 0.0000001, 0.0000001},
 }
-var cofficientBlack = [][]float64 {
+var cofficientBlack = [][]float64{
 	{0.0000001, 0.0000001, 0.0000001, 0.0000001, 0.0000001, 0.0000001, 0.0000001, 0.0000001},
 	{0.0000011, 0.0000012, 0.0000012, 0.0000012, 0.0000012, 0.0000012, 0.0000012, 0.0000011},
 	{0.0000021, 0.0000022, 0.0000023, 0.0000023, 0.0000023, 0.0000023, 0.0000022, 0.0000021},

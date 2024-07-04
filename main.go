@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-
-	"temp/chess"
-	"temp/cmd"
-	menuPack "temp/menu"
+  
+	"github.com/alisherfozilov/chess-game/chess"
+	"github.com/alisherfozilov/chess-game/cmd"
+	menuPack "github.com/alisherfozilov/chess-game/menu"
 )
 
 type Menu = menuPack.Menu
