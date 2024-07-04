@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-
+  
 	"github.com/alisherfozilov/chess-game/chess"
 	"github.com/alisherfozilov/chess-game/cmd"
 	menuPack "github.com/alisherfozilov/chess-game/menu"
@@ -11,13 +11,12 @@ import (
 type Menu = menuPack.Menu
 
 func main() {
-	cmd.Clear()
 	flag := true
 	var menu Menu
 
 	for flag {
 		cmd.Clear()
-		fmt.Println("")
+		fmt.Println()
 		chess.Label()
 		menu.Print()
 		menu.InputChoice()
