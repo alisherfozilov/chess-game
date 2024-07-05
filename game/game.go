@@ -2,6 +2,7 @@ package game
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/alisherfozilov/chess-game/chess"
 	"github.com/alisherfozilov/chess-game/chess/AI"
@@ -45,7 +46,7 @@ func Play() {
 			fmt.Println("ERROR", err)
 			return
 		}
-		if move == "EXIT" {
+		if strings.ToUpper(move) == "EXIT" {
 			return
 		}
 

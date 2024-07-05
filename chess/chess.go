@@ -919,6 +919,8 @@ func MakeMove(move string) (bool, bool) {
 	var num int
 	var pos Pos
 
+	move = strings.ToUpper(move)
+
 	switch move[0] {
 	case 'A':
 		num = 0
