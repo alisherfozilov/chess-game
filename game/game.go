@@ -2,6 +2,7 @@ package game
 
 import (
 	"fmt"
+	"math/rand"
 	"strings"
 	"time"
 
@@ -15,6 +16,7 @@ func init() {
 	settings.sound = true
 	settings.thinkLevel = 3
 	settings.timer = -1
+	settings.boardType = BoardTypeStandard
 }
 
 func Play() {
@@ -34,7 +36,12 @@ func Play() {
 			return
 		}
 		if move == 2 {
-			gb.Table = gb.TableStandartPosition
+			switch settings.boardType {
+			case BoardTypeStandard:
+				gb.Table = gb.TableStandartPosition
+			case BoardTypeRandom:
+				gb.Table = randomTablePosition()
+			}
 			gb.PlayerTime = settings.timer
 		}
 	} else {
@@ -125,12 +132,33 @@ func Play() {
 	_, _ = fmt.Scan(&temp)
 }
 
+func randomTablePosition() [8][8]int {
+	board := gb.TableStandartPosition
+	rand.Shuffle(len(board[0]), func(i, j int) {
+		board[0][i], board[0][j] = board[0][j], board[0][i]
+		board[7][i], board[7][j] = board[7][j], board[7][i]
+	})
+	return board
+}
+
+func init() {
+	rand.Seed(time.Now().Unix())
+}
+
 type Settings struct {
 	choice     int
 	thinkLevel int
 	sound      bool
 	timer      time.Duration
+	boardType  BoardType
 }
+
+type BoardType int
+
+const (
+	BoardTypeStandard = iota
+	BoardTypeRandom
+)
 
 var settings Settings
 
@@ -140,7 +168,8 @@ func (s *Settings) print() {
 	fmt.Println("2.Звук")
 	fmt.Println("3.Танцевать при взятии фигуры")
 	fmt.Println("4.Таймер")
-	fmt.Println("5.Выйти в меню")
+	fmt.Println("5.Расположение фигур")
+	fmt.Println("6.Выйти в меню")
 }
 func (s *Settings) switchChoice() bool {
 	cmd.Clear()
@@ -157,6 +186,8 @@ func (s *Settings) switchChoice() bool {
 	case 4:
 		s.setTimer()
 	case 5:
+		s.setBoardType()
+	case 6:
 		return false
 	}
 	return true
@@ -241,6 +272,18 @@ func (s *Settings) setTimer() {
 		settings.timer = time.Hour
 	case 6:
 		settings.timer = 3 * time.Hour
+	}
+}
+
+func (s *Settings) setBoardType() {
+	fmt.Println("1. Классическая")
+	fmt.Println("2. Куча мала")
+	s.inputChoice()
+	switch s.choice {
+	case 1:
+		s.boardType = BoardTypeStandard
+	case 2:
+		s.boardType = BoardTypeRandom
 	}
 }
 func SettingsFunc() {
