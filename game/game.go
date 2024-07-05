@@ -49,11 +49,14 @@ func Play() {
 			return
 		}
 
-		for chess.MakeMove(move) {
+		invalid, keep := chess.MakeMove(move)
+		for invalid || keep {
 			cmd.Clear()
 			fmt.Println()
 			chess.Label()
-			fmt.Println("Некорректный ход. Повторите попытку:")
+			if !keep {
+				fmt.Println("Некорректный ход. Повторите попытку:")
+			}
 			_, err := fmt.Scan(&move)
 			if err != nil {
 				fmt.Println("ERROR", err)
@@ -62,6 +65,7 @@ func Play() {
 			if move == "EXIT" {
 				return
 			}
+			invalid, keep = chess.MakeMove(move)
 		}
 
 		cmd.Clear()

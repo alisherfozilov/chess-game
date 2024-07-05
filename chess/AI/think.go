@@ -181,7 +181,7 @@ func positionScore(p Xy, whiteColor bool) float64 {
 			answer += 0.001
 
 		default:
-			log.Fatal("rankER_POSIT")
+			log.Fatal("rankER_POSIT", gb.Table[temp.Y][temp.X])
 		}
 	}
 	//answer += isChecked(p)

@@ -2,6 +2,7 @@ package chess
 
 import (
 	"fmt"
+	"strings"
 
 	gb "github.com/alisherfozilov/chess-game/chess/glob"
 	globXy "github.com/alisherfozilov/chess-game/chess/glob/Xy"
@@ -86,7 +87,7 @@ func GetFiguresMoves(move Xy, steak *stack) { //fill your stack with all possibl
 	var posT Xy
 
 	switch fig {
-	case 1:
+	case 11:
 		posT = pos
 
 		if posT.Y == 1 && gb.Table[posT.Y+2][posT.X] == 0 && gb.Table[posT.Y+1][posT.X] == 0 {
@@ -104,7 +105,7 @@ func GetFiguresMoves(move Xy, steak *stack) { //fill your stack with all possibl
 			temp = gb.Table[pos.Y+1][pos.X+1]
 			var flag = true
 			for i := 0; i < 6; i++ {
-				if temp == gb.Black[i] {
+				if temp == gb.White[i] {
 					flag = false
 					break
 				}
@@ -122,7 +123,7 @@ func GetFiguresMoves(move Xy, steak *stack) { //fill your stack with all possibl
 			temp = gb.Table[pos.Y+1][pos.X-1]
 			flag = true
 			for i := 0; i < 6; i++ {
-				if temp == gb.Black[i] {
+				if temp == gb.White[i] {
 					flag = false
 					break
 				}
@@ -135,7 +136,7 @@ func GetFiguresMoves(move Xy, steak *stack) { //fill your stack with all possibl
 			}
 
 		}
-	case 11:
+	case 1:
 		posT = pos
 		if (posT.Y == 6) && (gb.Table[posT.Y-2][posT.X] == 0) && (gb.Table[posT.Y-1][posT.X] == 0) {
 			posT.Y -= 2
@@ -152,7 +153,7 @@ func GetFiguresMoves(move Xy, steak *stack) { //fill your stack with all possibl
 			temp = gb.Table[pos.Y-1][pos.X-1]
 			flag = true
 			for i := 0; i < 6; i++ {
-				if temp == gb.White[i] {
+				if temp == gb.Black[i] {
 					flag = false
 					break
 				}
@@ -169,7 +170,7 @@ func GetFiguresMoves(move Xy, steak *stack) { //fill your stack with all possibl
 			temp = gb.Table[pos.Y-1][pos.X+1]
 			flag = true
 			for i := 0; i < 6; i++ {
-				if temp == gb.White[i] {
+				if temp == gb.Black[i] {
 					flag = false
 					break
 				}
@@ -652,11 +653,35 @@ func horseB(posT Xy, temp int, flag bool, steak *stack) {
 	}
 }
 
+var display = map[byte]string{
+	' ': " ",
+	'*': "*",
+	'S': "♝",
+	'I': "♚",
+	'K': "♞",
+	'P': "♟",
+	'F': "♛",
+	'L': "♜",
+	's': "♗",
+	'i': "♔",
+	'k': "♘",
+	'p': "♙",
+	'f': "♕",
+	'l': "♖",
+}
+
 func PrintTable() {
 	var figure byte
 	fmt.Println()
+
+	align := func(s string, sub int) string {
+		return strings.Repeat(" ", 8-sub) + s
+	}
+
+	fmt.Println(align("┌"+strings.Repeat("────┬", gb.SIZE-1)+"────┐", 0))
 	for i := 0; i < gb.SIZE; i++ {
-		fmt.Printf("			%v| ", gb.Numbers[i])
+		num := gb.Numbers[i]
+		fmt.Printf(align(fmt.Sprintf("%d │", num), 2))
 		for j := 0; j < gb.SIZE; j++ {
 			switch gb.Table[i][j] {
 			case 1:
@@ -686,33 +711,36 @@ func PrintTable() {
 			case 7:
 				figure = '*'
 			default:
-				figure = '.'
+				figure = ' '
 			}
-			fmt.Printf("  %v", string(figure))
+			fmt.Printf(" %v  │", display[figure])
 		}
 		fmt.Println()
+		if i != gb.SIZE-1 {
+			fmt.Println(align("├"+strings.Repeat("────┼", gb.SIZE-1)+"────┤", 0))
+		}
 	}
-	fmt.Printf("			     ______________________\n")
-	fmt.Printf("			     A  B  C  D  E  F  G  H\n\n")
+	fmt.Println(align("└"+strings.Repeat("────┴", gb.SIZE-1)+"────┘", 0))
+	fmt.Printf(align("   A    B    C    D    E    F    G    H\n\n", 0))
 }
 
-func MakeMove(move string) bool {
+func MakeMove(move string) (bool, bool) {
 	if move == "ZZZ" {
-		return false
+		return false, false
 	}
 	if move == "Adiba" || move == "Адиба" {
 		fmt.Println("Come along with me with a 🦋 and 🐝")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
 		gb.Magic = true
-		return false
+		return false, false
 	}
 	if move == "AlisherFozilov" || move == "АлишерФозилов" || move == "АкаиАсал" || move == "Асал" {
 		fmt.Println("Привет мой создатель, Акаи Асал! Я сам сдамся тебе!")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
 		gb.Magic = true
-		return false
+		return false, false
 	}
 	if move == "Amanullo" || move == "Aman" {
 		fmt.Println("Чит-кодишь?! Причём своё имя первым вводишь -_-")
@@ -722,171 +750,171 @@ func MakeMove(move string) bool {
 		fmt.Println("1.Продолжить")
 		gb.BadMagic = true
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Munis" || move == "Мунис" {
 		fmt.Println("Классное имя. Назову сына-программу так:D")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "AlisherDododjonov" || move == "АлишерДододжонов" {
 		fmt.Println("Омагад, я играю с компом")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Ikrom" || move == "Икром" {
 		fmt.Println("you're the Lucky Ones this time")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
 		gb.Magic = true
-		return false
+		return false, false
 	}
 	if move == "Rustam" || move == "Рустам" {
 		fmt.Println("Я знаю, что ты крут!")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
 		gb.Magic = true
-		return false
+		return false, false
 	}
 	if move == "Sorbon" || move == "Сорбон" {
 		fmt.Println("youtuGe")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Daler" || move == "Далер" {
 		fmt.Println("Футбол отстой! Я тоже не умею играть. Я ж комп.")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Спитамен" || move == "Spitamen" {
 		fmt.Println("О, бурундук. Хочешь орешек? Я тоже. Но дела ни в тибе.")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Zarruh" || move == "Заррух" {
 		fmt.Println("Бауманкара гир Дубай рав.")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Umed" || move == "Умед" {
 		fmt.Println("Надежда тебе не поможет!")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Азамат" || move == "Azamat" {
 		fmt.Println("Харсеш.")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Акбар" || move == "Akbar" {
 		fmt.Println("Да кчо мегарди!?")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Faromus" || move == "Фаромуз" {
 		fmt.Println("Да прическат чонм.")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Habib" || move == "Хабиб" {
 		fmt.Println("Вот Вы настоящий программист, а не тот придурок,\nкоторый меня написал")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Anisa" || move == "Аниса" {
 		fmt.Println("Звезда Аниса. Есть такая приправа. Китайцы любят.")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Ёсумин" || move == "Yosumin" || move == "Есумин" || move == "Ёсуман" || move == "Есуман" {
 		fmt.Println("До сих пор не знаю, как правильно: Ёсумин или Ёсуман.")
 		fmt.Println("Хотя, я же комп, я тебя вообще не знаю.")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Furuzon" || move == "Фурузон" {
 		fmt.Println("Футууузооооон:D")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Махваш" || move == "Mahvash" {
 		fmt.Println("Лаваш. Лан, суфлешка. В лаваше.")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Bogdan" || move == "Богдан" {
 		fmt.Println("rand() % 2 ? 1:0")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Раушания" || move == "Raushania" {
 		fmt.Println("О, Вам Алишер привет передавал)")
 		fmt.Println("1.Продолжить")
 		gb.Magic = true
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Фотима" || move == "Fotima" {
 		fmt.Println("Апчхииии")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Parvina" || move == "Парвина" {
 		fmt.Println("Хей, яблоко!")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Sabina" || move == "Сабина" {
 		fmt.Println("Я не смотрю корейские сериалы, но ем морковь по-корейски.")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Сабрина" || move == "Sabrina" {
 		fmt.Println("Мда уж")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Шариф" || move == "Sharif" {
 		fmt.Println("Пайпок!!!")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "Нилуфар" || move == "Nilufar" {
 		fmt.Println("Как же я мог это имя не записать-то!")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
 	if move == "НК" || move == "NK" {
 		fmt.Println("Твой брат был лучше.")
 		fmt.Println("1.Продолжить")
 		gb.BadMagic = true
 		fmt.Scan(&move)
-		return false
+		return false, false
 	}
-	if len(move) < 4 {
-		return true
+	if len(move) != 2 && len(move) != 4 {
+		return true, false
 	}
 	var num int
 	var pos Pos
@@ -909,14 +937,14 @@ func MakeMove(move string) bool {
 	case 'H':
 		num = 7
 	default:
-		return true
+		return true, false
 	}
 
 	pos.Sx = num
 
 	temp := int(move[1]) - 49
 	if temp < 0 || temp > 8 {
-		return true
+		return true, false
 	}
 	pos.Sy = temp
 
@@ -939,6 +967,39 @@ func MakeMove(move string) bool {
 		pos.Sy = 0
 	}
 
+	for i := range gb.Table {
+		for j := range gb.Table[i] {
+			if gb.Table[i][j] == 7 {
+				gb.Table[i][j] = 0
+			}
+		}
+	}
+
+	if len(move) == 2 {
+		var moves stack
+		GetFiguresMoves(Xy{pos.Sx, pos.Sy}, &moves)
+
+		if gb.Selection.X != pos.Sx {
+			for _, p := range moves.Slice {
+				if gb.Table[p.Y][p.X] == 0 {
+					gb.Table[p.Y][p.X] = 7
+				}
+			}
+			gb.Selection.X = pos.Sx
+		} else {
+			gb.Selection.X = -1
+		}
+
+		//if gb.Selection.X == -1 {
+		//	gb.Selection.X = pos.Sx
+		//} else {
+		//	gb.Selection.X = -1
+		//}
+
+		return false /*keep*/, true
+	}
+	gb.Selection.X = -1
+
 	switch move[2] {
 	case 'A':
 		num = 0
@@ -957,14 +1018,14 @@ func MakeMove(move string) bool {
 	case 'H':
 		num = 7
 	default:
-		return true
+		return true, false
 	}
 
 	pos.Ex = num
 
 	temp = int(move[3]) - 49
 	if temp < 0 || temp > 8 {
-		return true
+		return true, false
 	}
 	pos.Ey = temp
 
@@ -1005,9 +1066,9 @@ func MakeMove(move string) bool {
 	if flag {
 		gb.Table[pos.Ey][pos.Ex] = gb.Table[pos.Sy][pos.Sx]
 		gb.Table[pos.Sy][pos.Sx] = 0
-		return false
+		return false, false
 	}
-	return true
+	return true, false
 }
 func isWhite(fig int) bool {
 	for i := 0; i < 6; i++ {
