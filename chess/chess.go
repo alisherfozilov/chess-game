@@ -3,6 +3,7 @@ package chess
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	gb "github.com/alisherfozilov/chess-game/chess/glob"
 	globXy "github.com/alisherfozilov/chess-game/chess/glob/Xy"
@@ -678,6 +679,9 @@ func PrintTable() {
 		return strings.Repeat(" ", 8-sub) + s
 	}
 
+	if gb.PlayerTime != -1 {
+		fmt.Println("Time left", gb.PlayerTime.Truncate(time.Second))
+	}
 	fmt.Println(align("┌"+strings.Repeat("────┬", gb.SIZE-1)+"────┐", 0))
 	for i := 0; i < gb.SIZE; i++ {
 		num := gb.Numbers[i]
@@ -721,7 +725,8 @@ func PrintTable() {
 		}
 	}
 	fmt.Println(align("└"+strings.Repeat("────┴", gb.SIZE-1)+"────┘", 0))
-	fmt.Printf(align("   A    B    C    D    E    F    G    H\n\n", 0))
+	fmt.Printf(align("   A    B    C    D    E    F    G    H\n", 0))
+	fmt.Println()
 }
 
 func MakeMove(move string) (bool, bool) {
@@ -815,6 +820,13 @@ func MakeMove(move string) (bool, bool) {
 		return false, false
 	}
 	if move == "Акбар" || move == "Akbar" {
+		fmt.Println("Ай фиииил гуууд!")
+		fmt.Println("1.Продолжить")
+		fmt.Scan(&move)
+		gb.BadMagic = true
+		return false, false
+	}
+	if move == "Акбар Газета" || move == "Akbar newspaper" {
 		fmt.Println("Да кчо мегарди!?")
 		fmt.Println("1.Продолжить")
 		fmt.Scan(&move)

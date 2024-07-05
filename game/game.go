@@ -3,6 +3,7 @@ package game
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/alisherfozilov/chess-game/chess"
 	"github.com/alisherfozilov/chess-game/chess/AI"
@@ -13,6 +14,7 @@ import (
 func init() {
 	settings.sound = true
 	settings.thinkLevel = 3
+	settings.timer = -1
 }
 
 func Play() {
@@ -33,7 +35,10 @@ func Play() {
 		}
 		if move == 2 {
 			gb.Table = gb.TableStandartPosition
+			gb.PlayerTime = settings.timer
 		}
+	} else {
+		gb.PlayerTime = settings.timer
 	}
 
 	var move string
@@ -41,11 +46,17 @@ func Play() {
 	fmt.Println("Для выхода в меню введите \"EXIT\" ")
 	for {
 		chess.Label()
+		startMoveTime := time.Now()
 		_, err := fmt.Scan(&move)
 		if err != nil {
 			fmt.Println("ERROR", err)
 			return
 		}
+		moveTime := time.Since(startMoveTime)
+		if gb.PlayerTime != -1 {
+			gb.PlayerTime -= moveTime
+		}
+
 		if strings.ToUpper(move) == "EXIT" {
 			return
 		}
@@ -118,6 +129,7 @@ type Settings struct {
 	choice     int
 	thinkLevel int
 	sound      bool
+	timer      time.Duration
 }
 
 var settings Settings
@@ -127,7 +139,8 @@ func (s *Settings) print() {
 	fmt.Println("1.Сложность")
 	fmt.Println("2.Звук")
 	fmt.Println("3.Танцевать при взятии фигуры")
-	fmt.Println("4.Выйти в меню")
+	fmt.Println("4.Таймер")
+	fmt.Println("5.Выйти в меню")
 }
 func (s *Settings) switchChoice() bool {
 	cmd.Clear()
@@ -142,6 +155,8 @@ func (s *Settings) switchChoice() bool {
 	case 3:
 		s.dance()
 	case 4:
+		s.setTimer()
+	case 5:
 		return false
 	}
 	return true
@@ -200,6 +215,33 @@ func (s *Settings) dance() {
 	fmt.Println("1.Выкл")
 	fmt.Println("P.S. компьютер непротив того, чтобы Вы сами потанцевали:D")
 	s.inputChoice()
+}
+
+func (s *Settings) setTimer() {
+	fmt.Println("0. Выкл.")
+	fmt.Println("1. 5 Минут")
+	fmt.Println("2. 10 Минут")
+	fmt.Println("3. 20 Минут")
+	fmt.Println("4. 30 Минут")
+	fmt.Println("5. 1 час")
+	fmt.Println("6. 3 часа")
+	s.inputChoice()
+	switch s.choice {
+	case 0:
+		settings.timer = -1
+	case 1:
+		settings.timer = 5 * time.Minute
+	case 2:
+		settings.timer = 10 * time.Minute
+	case 3:
+		settings.timer = 20 * time.Minute
+	case 4:
+		settings.timer = 30 * time.Minute
+	case 5:
+		settings.timer = time.Hour
+	case 6:
+		settings.timer = 3 * time.Hour
+	}
 }
 func SettingsFunc() {
 	flag := true

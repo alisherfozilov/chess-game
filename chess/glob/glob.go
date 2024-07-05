@@ -1,12 +1,17 @@
 package glob
 
-import "github.com/alisherfozilov/chess-game/chess/glob/Xy"
+import (
+	"time"
+
+	"github.com/alisherfozilov/chess-game/chess/glob/Xy"
+)
 
 var Letters = []byte{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}
 var Numbers = []int{8, 7, 6, 5, 4, 3, 2, 1}
 var Black = []int{1, 2, 3, 5, 10, 99}
 var White = []int{11, 21, 31, 51, 101, 990}
 var Selection = Xy.Xy{-1, -1}
+var PlayerTime time.Duration = -1
 
 const SIZE = 8
 
